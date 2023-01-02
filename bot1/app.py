@@ -29,6 +29,7 @@ async def echo(message: types.Message):
     elif message.text.lower() == "/count":
         global count
         await message.answer("Count: {count}".format(count=count))
+        count += 1
     else:
         await message.answer(message.as_json())
 
