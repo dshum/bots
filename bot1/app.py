@@ -1,13 +1,6 @@
-import os, logging
 from aiogram import Bot, Dispatcher, executor, types
-from os.path import join, dirname
-from dotenv import load_dotenv
-
-# Initialize env
-dotenv_path = join(dirname(__file__), '.env')
-load_dotenv(dotenv_path)
-
-API_TOKEN = os.environ.get("API_TOKEN")
+from config import API_TOKEN
+import logging
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -15,6 +8,8 @@ logging.basicConfig(level=logging.INFO)
 # Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
+
+count = 0
 
 
 @dp.message_handler(commands=['start', 'help'])
@@ -31,6 +26,9 @@ async def echo(message: types.Message):
         await message.answer("I am Bot")
     elif message.text.lower() == "who is your owner?":
         await message.answer("Shumeev")
+    elif message.text.lower() == "/count":
+        global count
+        await message.answer("Count: {count}".format(count=count))
     else:
         await message.answer(message.as_json())
 
